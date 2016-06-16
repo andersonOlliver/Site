@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{cadastroNoticiaBean.prepararCadastro}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Cadastro de Notícias</ui:define>
+
+	<ui:define name="corpo">
+		<h1>Cadastro de Notícia</h1>
+
+		<h:form id="frm">
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Salvar" icon="ui-icon-disk"
+						action="#{cadastroNoticiaBean.salvar}" update="@form" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" />
+
+
+			<div class="fluid">
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-4,ui-grid-col-8">
+
+
+					<h:panelGrid columns="2" id="grid">
+
+						<p:outputLabel value="Titulo" for="titulo" />
+						<p:inputText id="titulo" required="true"
+							value="#{cadastroNoticiaBean.noticia.titulo}">
+						</p:inputText>
+
+						<p:outputLabel value="Usuário para teste" for="usuario" />
+						<p:selectOneMenu id="usuario"
+							value="#{cadastroNoticiaBean.noticia.usuario}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione o Usuario"
+								noSelectionOption="true" />
+							<f:selectItems value="#{cadastroNoticiaBean.listaUsuario}"
+								var="item" itemValue="#{item}" itemLabel="#{item.nomeCompleto}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Data que irá ao ar" for="data_cadastro" />
+						<p:calendar id="data_cadastro" required="true"
+							value="#{cadastroNoticiaBean.noticia.dataCadastro}"
+							pattern="MM/dd/yyyy HH:mm:ss" />
+
+						<p:outputLabel value="Data que sairá da pagina principal"
+							for="data_historico" />
+						<p:calendar id="data_historico" required="true"
+							value="#{cadastroNoticiaBean.noticia.dataRemocao}"
+							pattern="MM/dd/yyyy HH:mm:ss" />
+
+
+
+					</h:panelGrid>
+
+					<h:panelGroup>
+						<p:outputLabel value="Corpo de notícia" for="corpo_noticia" />
+						<p:editor id="corpo_noticia"
+							value="#{cadastroNoticiaBean.noticia.valor}" />
+
+						<p:panel header="Adicionar Tags" style="margin-bottom:20px">
+							<h:panelGrid columns="2" cellpadding="5">
+								<h:outputLabel value="Tag" for="tag" />
+								<p:inputText id="tag" value="#{cadastroNoticiaBean.tag.valor}"
+									required="true" />
+
+								<p:commandButton id="btn_reset" value="Reset" type="reset" />
+								<p:commandButton id="btn_add" value="Add"
+									update="tags_pnl @parent"
+									action="#{cadastroNoticiaBean.resetar}">
+									<p:collector unique="true" value="#{cadastroNoticiaBean.tag}"
+										addTo="#{cadastroNoticiaBean.tags}" />
+								</p:commandButton>
+							</h:panelGrid>
+						</p:panel>
+
+						<p:outputPanel id="tags_pnl">
+							<p:dataTable value="#{cadastroNoticiaBean.tags}" var="item"
+								id="tabsTable">
+
+								<p:column headerText="tags">
+									<h:outputText value="#{item.valor}" />
+								</p:column>
+							</p:dataTable>
+						</p:outputPanel>
+					</h:panelGroup>
+
+				</p:panelGrid>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

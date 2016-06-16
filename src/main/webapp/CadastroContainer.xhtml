@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{cadastroContainerBean.prepararCadastro}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Cadastro de Container</ui:define>
+
+	<ui:define name="corpo">
+		<h1>Cadastro de Container</h1>
+
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" />
+
+			<p:panelGrid columns="2" id="grid">
+
+				<p:outputLabel value="Titulo" for="menu_titulo" />
+				<p:inputText id="menu_titulo" required="true"
+					value="#{cadastroContainerBean.container.nome}">
+				</p:inputText>
+
+				<p:outputLabel value="Pagina" for="pagina" />
+				<p:selectOneMenu id="pagina" value="#{cadastroContainerBean.container.pagina}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem itemLabel="Selecione a Página" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroContainerBean.listaPaginas}"
+						var="pagina_item" itemValue="#{pagina_item}"
+						itemLabel="#{pagina_item.nomePagina}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel />
+				<p:commandButton value="Salvar" action="#{cadastroContainerBean.salvar}"
+					icon="ui-icon-disk" update="@form" />
+
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

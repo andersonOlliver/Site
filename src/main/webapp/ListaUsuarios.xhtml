@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{consultaUsuariosBean.consultar}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Consulta de lançamentos</ui:define>
+
+	<ui:define name="corpo">
+
+		<h1>Consulta de usuarios</h1>
+
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" />
+
+			<h:panelGrid columns="3">
+				<p:inputText value="#{consultaUsuariosBean.filtro.chave}" id="chave" />
+
+				<p:commandButton value="Consultar" update="tbl" process="@form" />
+			</h:panelGrid>
+
+			<p:dataTable id="tbl" value="#{consultaUsuariosBean.model}"
+				var="item" paginator="true" rows="5" paginatorPosition="bottom"
+				lazy="true">
+
+				<p:column headerText="Pessoa">
+					<h:outputText value="#{item.nomeCompleto}" />
+				</p:column>
+
+				<p:column headerText="Apelido">
+					<h:outputText value="#{item.apelido}" />
+				</p:column>
+
+				<p:column headerText="Chave" sortBy="#{item.chave}">
+					<h:outputText value="#{item.chave}" />
+				</p:column>
+
+				<p:column headerText="Tipo">
+					<h:outputText value="#{item.tipo}" />
+				</p:column>
+
+				<p:column width="70" style="text-align: center">
+					<p:button icon="ui-icon-pencil" title="Editar"
+						outcome="CadastroUsuario">
+						<f:param name="id" value="#{item.id}" />
+					</p:button>
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+						process="@this" update="@form"
+						action="#{consultaUsuariosBean.excluir}">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{consultaUsuariosBean.usuarioSelecionado}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

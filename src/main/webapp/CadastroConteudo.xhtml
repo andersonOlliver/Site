@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{cadastroConteudoBean.prepararCadastro}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Cadastro de Conteúdo</ui:define>
+
+	<ui:define name="corpo">
+		<h1>Cadastro de Conteúdo</h1>
+
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" />
+			<!-- <p:growl id="msgs" /> -->
+
+			<p:panelGrid columns="2" id="grid">
+
+				<p:outputLabel value="Titulo" for="titulo" />
+				<p:inputText id="titulo" required="true"
+					value="#{cadastroConteudoBean.conteudo.titulo}">
+				</p:inputText>
+
+				<p:outputLabel value="Endereço da Imagem" for="urlImagem" />
+				<p:inputText id="urlImagem"
+					value="#{cadastroConteudoBean.conteudo.urlImagem}">
+				</p:inputText>
+
+				<p:outputLabel value="Link" for="link" />
+				<p:inputText id="link" value="#{cadastroConteudoBean.conteudo.link}">
+				</p:inputText>
+
+				<p:outputLabel value="Data de Entrada" for="data_cadastro" />
+				<p:calendar id="data_cadastro" required="true"
+					value="#{cadastroConteudoBean.conteudo.dataCadastro}"
+					pattern="MM/dd/yyyy HH:mm:ss" />
+
+				<p:outputLabel value="Data de Remoção" for="data_historico" />
+				<p:calendar id="data_historico" required="true"
+					value="#{cadastroConteudoBean.conteudo.dataRemocao}"
+					pattern="MM/dd/yyyy HH:mm:ss" />
+
+				<p:outputLabel value="Container" for="container" />
+				<p:selectOneMenu id="container"
+					value="#{cadastroConteudoBean.conteudo.container}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem itemLabel="Selecione o Container"
+						noSelectionOption="true" />
+					<f:selectItems value="#{cadastroConteudoBean.listaContainer}"
+						var="item" itemValue="#{item}" itemLabel="#{item.nome}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Usuário para teste" for="usuario" />
+				<p:selectOneMenu id="usuario"
+					value="#{cadastroConteudoBean.conteudo.usuario}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem itemLabel="Selecione o Usuario"
+						noSelectionOption="true" />
+					<f:selectItems value="#{cadastroConteudoBean.listaUsuario}"
+						var="item" itemValue="#{item}" itemLabel="#{item.nomeCompleto}" />
+				</p:selectOneMenu>
+
+				<p:panel header="Adicionar Tags" style="margin-bottom:20px">
+					<h:panelGrid columns="2" cellpadding="5">
+						<h:outputLabel value="Valor : " for="tag_valor" />
+						<p:inputText id="tag_valor"
+							value="#{cadastroConteudoBean.tag.valor}" />
+
+						<p:commandButton id="btn_reset" value="Reset" type="reset" />
+						<p:commandButton id="btn_add" value="Add" update="tags @parent @this"
+							action="#{cadastroConteudoBean.resetar}">
+							<p:collector value="#{cadastroConteudoBean.tag}"
+								addTo="#{cadastroConteudoBean.tags}" unique="true" />
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+
+				<p:outputPanel id="tags">
+					<p:dataTable value="#{cadastroConteudoBean.tags}" var="item"
+						id="tagsTable">
+						<p:column headerText="valor">
+							<h:outputText value="#{item.valor}" />
+						</p:column>
+
+						<p:column headerText="Ação">
+							<p:commandLink value="Remover" update=":frm:tags"
+								process=":frm:tags">
+								<p:collector unique="true" value="#{item}"
+									removeFrom="#{cadastroConteudoBean.tags}"></p:collector>
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+
+				<h:outputLabel />
+				<p:commandButton value="Salvar"
+					action="#{cadastroConteudoBean.salvar}" icon="ui-icon-disk"
+					update="@form" />
+
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

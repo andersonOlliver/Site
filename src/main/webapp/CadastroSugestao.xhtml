@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{cadastroSugestaoBean.prepararCadastro}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Cadastro de Sugestão</ui:define>
+
+	<ui:define name="corpo">
+		<h1>Cadastro de Sugestão</h1>
+
+		<h:form id="frm">
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Salvar" icon="ui-icon-disk"
+						action="#{cadastroSugestaoBean.salvar}" update="@form" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" />
+
+
+			<div class="fluid">
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-4,ui-grid-col-8">
+
+
+
+
+					<p:outputLabel value="Texto Sugestão" for="txt_sugestao" />
+					<p:inputTextarea id="txt_sugestao" required="true" maxlength="200"
+						value="#{cadastroSugestaoBean.sugestao.valor}" />
+
+					<p:outputLabel value="Usuario" for="usuario" />
+					<p:selectOneMenu id="usuario" required="true"
+						value="#{cadastroSugestaoBean.sugestao.usuario}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Selecione o usuário"
+							noSelectionOption="true" />
+						<f:selectItems value="#{cadastroSugestaoBean.todosUsuarios}"
+							var="item" itemValue="#{item}" itemLabel="#{item.chave} - #{item.apelido}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

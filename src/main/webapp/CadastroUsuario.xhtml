@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui" >
+
+	<f:metadata>
+		<o:viewParam name="id" value="#{cadastroUsuarioBean.usuario}" />
+		<f:viewAction action="#{cadastroUsuarioBean.prepararCadastro}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Cadastro de usuario</ui:define>
+
+	<ui:define name="corpo">
+		<h1>Cadastro de usuario</h1>
+
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" />
+
+			<p:panelGrid columns="2" id="grid">
+				<p:outputLabel value="Tipo" for="tipo" />
+				<p:selectOneButton id="tipo" required="true"
+					value="#{cadastroUsuarioBean.usuario.tipo}">
+					<f:selectItems value="#{cadastroUsuarioBean.tiposUsuarios}"
+						var="tipoUsuario" itemValue="#{tipoUsuario}"
+						itemLabel="#{tipoUsuario.descricao}" />
+				</p:selectOneButton>
+
+				<p:outputLabel value="Chave" for="chave" />
+				<p:inputText id="chave" maxlength="8" required="true"
+					value="#{cadastroUsuarioBean.usuario.chave}" />
+
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome"
+					value="#{cadastroUsuarioBean.usuario.nomeCompleto}" />
+
+				<p:outputLabel value="Apelido" for="apelido" />
+				<p:inputText id="apelido"
+					value="#{cadastroUsuarioBean.usuario.apelido}" />
+
+				<p:outputLabel value="Prefixo" for="prefixo" />
+				<p:inputText id="prefixo"
+					value="#{cadastroUsuarioBean.usuario.prefixo}">
+					<p:keyFilter regEx="/[\d]/" />
+				</p:inputText>
+
+
+				<h:outputLabel />
+				<p:commandButton value="Salvar"
+					action="#{cadastroUsuarioBean.salvar}" icon="ui-icon-disk"
+					update="@form" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

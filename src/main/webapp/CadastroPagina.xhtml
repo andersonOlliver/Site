@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{cadastroPaginaBean.prepararCadastro}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Cadastro de Páginas</ui:define>
+
+	<ui:define name="corpo">
+		<h1>Cadastro de Páginas</h1>
+
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" />
+
+			<p:panelGrid columns="2" id="grid">
+
+				<p:outputLabel value="Mercado" for="mercado" />
+				<p:selectOneMenu id="mercado" required="true"
+					value="#{cadastroPaginaBean.pagina.mercado}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem itemLabel="Selecione o mercado"
+						noSelectionOption="true" />
+					<f:selectItems value="#{cadastroPaginaBean.listaMercado}"
+						var="item" itemValue="#{item}" itemLabel="#{item.nome}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Menu" for="menu" />
+				<p:selectOneMenu id="menu" value="#{cadastroPaginaBean.pagina.menu}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem itemLabel="Selecione o Menu" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroPaginaBean.listaMenu}"
+						var="menu_item" itemValue="#{menu_item}"
+						itemLabel="#{menu_item.titulo}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Nome da página" for="pagina_nome" />
+				<p:inputText id="pagina_nome" required="true"
+					value="#{cadastroPaginaBean.pagina.nomePagina}">
+				</p:inputText>
+
+				<h:outputLabel />
+				<p:commandButton value="Salvar"
+					action="#{cadastroPaginaBean.salvar}" icon="ui-icon-disk"
+					update="@form" />
+
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{consultaSugestaoBean.consultar}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Consulta de lançamentos</ui:define>
+
+	<ui:define name="corpo">
+
+		<h1>Consulta de usuarios</h1>
+
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" />
+			<!-- 
+			<h:panelGrid columns="3">
+				<p:inputText value="#{consultaSugestaoBean.filtro.estado}" id="estado" />
+
+				<p:commandButton value="Consultar" update="tbl" process="@form" />
+			</h:panelGrid>
+			 -->
+			<p:dataTable id="tbl" value="#{consultaSugestaoBean.model}"
+				var="item" paginator="true" rows="5" lazy="true"
+				paginatorPosition="bottom">
+
+				<p:column headerText="Sugestão">
+					<h:outputText value="#{item.valor}" />
+				</p:column>
+
+				<p:column headerText="Usuario">
+					<h:outputText value="#{item.usuario.chave} - #{item.usuario.apelido}" />
+				</p:column>
+				
+				<p:column headerText="Estado Sugestão">
+					<h:outputText value="#{item.estado}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

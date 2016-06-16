@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{consultaConteudoBean.consultar}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Consulta de Conteudos</ui:define>
+
+	<ui:define name="corpo">
+
+		<h1>Consulta de Conteudos</h1>
+
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" />
+
+			<h:panelGrid columns="3">
+				<p:inputText value="#{consultaConteudoBean.filtro.titulo}" id="titulo" />
+
+				<p:commandButton value="Consultar" update="tbl" process="@form" />
+			</h:panelGrid>
+
+			<p:dataTable id="tbl" value="#{consultaConteudoBean.model}"
+				var="item" paginator="true" rows="5" paginatorPosition="bottom"
+				lazy="true">
+
+				<p:column headerText="Titulo">
+					<h:outputText value="#{item.titulo}" />
+				</p:column>
+
+				<p:column headerText="Pagina">
+					<h:outputText value="#{item.container.pagina.nomePagina}" />
+				</p:column>
+
+ 
+				<p:column headerText="Container">
+					<h:outputText value="#{item.container.nome}" />
+				</p:column>
+
+				<p:column headerText="Data Postagem">
+					<h:outputText value="#{item.dataCadastro}" />
+				</p:column>
+				
+				<p:column headerText="Data Retirada">
+					<h:outputText value="#{item.dataRemocao}" />
+				</p:column>
+				
+				<p:column headerText="Tags">
+					<h:outputText value="#{item.tags}" />
+				</p:column>
+<!--
+				<p:column width="70" style="text-align: center">
+					<p:button icon="ui-icon-pencil" title="Editar"
+						outcome="CadastroUsuario">
+						<f:param name="id" value="#{item.id}" />
+					</p:button>
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+						process="@this" update="@form"
+						action="#{consultaUsuariosBean.excluir}">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{consultaUsuariosBean.usuarioSelecionado}" />
+					</p:commandButton>
+				</p:column>
+ -->
+			</p:dataTable>
+		
+                        <h:commandLink>
+                            <h:outputText value="exportar" />
+                            <p:dataExporter type="xls" target="tbl" fileName="dados" pageOnly="true" />
+                        </h:commandLink>
+                </h:form>
+	</ui:define>
+
+</ui:composition>

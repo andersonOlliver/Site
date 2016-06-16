@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><ui:insert name="titulo">Sistema Financeiro</ui:insert></title>
+	<h:outputStylesheet library="supermt" name="estilo.css" />
+</h:head>
+
+<h:body>
+
+
+	<p:ajaxStatus styleClass="ajax-status">
+		<f:facet name="start">
+			<h:graphicImage library="supermt" name="loading.gif" />
+		</f:facet>
+		<f:facet name="complete">
+			<h:outputText value="" />
+		</f:facet>
+	</p:ajaxStatus>
+
+	<header>
+		<!-- 
+		<h:graphicImage library="supermt" name="logo.png" />
+		 -->
+		<div style="float: right; margin-right: 20px; margin-top: 8px">
+			Olá Usuario!</div>
+	</header>
+
+	<h:form>
+		<p:menubar style="margin-top: -20px; margin-bottom: 20px">
+			<p:submenu label="Cadastros">
+				<p:menuitem value="Container"
+					action="CadastroContainer?faces-redirect=true" />
+				<p:menuitem value="Conteudo"
+					action="CadastroConteudo?faces-redirect=true" />
+				<p:menuitem value="Menu" action="CadastroMenu?faces-redirect=true" />
+				<p:menuitem value="Mercado"
+					action="CadastroMercado?faces-redirect=true" />
+				<p:menuitem value="Noticia"
+					action="CadastroNoticia?faces-redirect=true" />
+				<p:menuitem value="Pagina"
+					action="CadastroPagina?faces-redirect=true" />
+				<p:menuitem value="Sugestao"
+					action="CadastroSugestao?faces-redirect=true" />
+				<p:menuitem value="Usuario"
+					action="CadastroUsuario?faces-redirect=true" />
+			</p:submenu>
+			<p:submenu label="Consultas">
+				<p:menuitem value="Container"
+					action="/ListaContainer?faces-redirect=true" />
+				<p:menuitem value="Conteudo"
+					action="ListaConteudo?faces-redirect=true" />
+				<p:menuitem value="Menu" action="/ListaMenu?faces-redirect=true" />
+				<p:menuitem value="Mercado"
+					action="/ListaMercado?faces-redirect=true" />
+				<p:menuitem value="Pagina" action="/ListaPagina?faces-redirect=true" />
+				<p:menuitem value="Sugestao"
+					action="ListaSugestoes?faces-redirect=true" />
+				<p:menuitem value="Usuario"
+					action="/ListaUsuarios?faces-redirect=true" />
+			</p:submenu>
+			<!-- <p:submenu label="Sistema">
+				<p:menuitem value="Sair" action="#{loginBean.logout}" />
+			</p:submenu> -->
+		</p:menubar>
+	</h:form>
+
+	<div id="conteudo">
+		<ui:insert name="corpo" />
+	</div>
+
+	<footer> Sistema de Gerenciamento - SuperMT </footer>
+</h:body>
+
+</html>

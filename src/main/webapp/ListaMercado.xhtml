@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{consultaMercadoBean.consultar}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Consulta de Mercados</ui:define>
+
+	<ui:define name="corpo">
+
+		<h1>Consulta de Mercados</h1>
+
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" />
+
+			<p:dataTable value="#{consultaMercadoBean.mercados}"
+				var="mercado" paginator="true" rows="5"
+				paginatorPosition="bottom">
+				<p:column headerText="Id" sortBy="#{mercado.id}">
+					<h:outputText value="#{mercado.id}" />
+				</p:column>
+				<p:column headerText="Nome" sortBy="#{mercado.nome}">
+					<h:outputText value="#{mercado.nome}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
